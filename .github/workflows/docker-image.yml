@@ -13,11 +13,9 @@ env:
   REGISTRY_PASSWORD: ${{ secrets.GITHUB_TOKEN }}
 
 jobs:
-
   build:
-
     runs-on: ubuntu-latest
-
+    name: Build & deploy docker image
     steps:
       - uses: actions/checkout@v4
       - name: Setup Docker Buildx
@@ -48,10 +46,3 @@ jobs:
           cache-from: type=gha
           cache-to: type=gha,mode=max
           file: Dockerfile
-
-
-
-
-
-    - name: Build the Docker image
-      run: docker build . --file Dockerfile --platform linux/amd64 --tag :"$(date +%s)"

@@ -1,13 +1,8 @@
-#!/bin/bash -l
-
-ls -al 
-
-echo "Hello $1"
-time=$(date)
-echo "time=$1" >> $GITHUB_OUTPUT
+#!/bin/bash
+set -e
 
 echo Auth process
-echo "${{ secrets.KUBE_XLOO_SA_MEDIA }}" | base64 -d > $HOME/.kube/config  
+echo "$kube_helm_deploy_kube_auth_line" | base64 -d > $HOME/.kube/config  
 
 echo kube_helm_deploy_get_app_version
 echo "$kube_helm_deploy_app_version"

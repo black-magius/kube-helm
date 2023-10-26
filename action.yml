@@ -9,6 +9,10 @@ inputs:
     description: 'namespace to deploy'
     required: true
     default: ''
+  kube_auth_line:  # base64 dencoded kube config file
+    description: 'base64 dencoded kube config file'
+    required: true
+    default: ''
 outputs:
   time: # id of output
     description: 'The time we greeted you'
@@ -22,7 +26,6 @@ runs:
     kube_helm_deploy_value_tpl_name: "values.tpl.yaml"
     kube_helm_deploy_destination_namespace: ${{ inputs.namespace }}
     kube_helm_deploy_imagePullPolicy: ""
+    kube_helm_deploy_kube_auth_line: ${{ inputs.kube_auth_line }} 
   args:
     - ${{ inputs.namespace }}
-    # - ${{ inputs.github-sarif }}
-    # - ${{ inputs.optional-flags }}

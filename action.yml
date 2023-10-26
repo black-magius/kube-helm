@@ -15,6 +15,13 @@ outputs:
 runs:
   using: 'docker'
   image: 'docker://ghcr.io/black-magius/kube-helm:main'
+  env:
+    kube_helm_deploy_app_version: ""
+    kube_helm_deploy_path_to_helm_files: "./.deploy/.chart"
+    kube_helm_deploy_chart_tpl_name: "Chart.tpl.yaml"
+    kube_helm_deploy_value_tpl_name: "values.tpl.yaml"
+    kube_helm_deploy_destination_namespace: ${{ inputs.namespace }}
+    kube_helm_deploy_imagePullPolicy: ""
   args:
     - ${{ inputs.namespace }}
     # - ${{ inputs.github-sarif }}

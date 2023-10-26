@@ -42,10 +42,6 @@ echo kube_helm_deploy_set_chart
 envsubst < "$kube_helm_deploy_path_to_helm_files/$kube_helm_deploy_chart_tpl_name" > "$kube_helm_deploy_path_to_helm_files/Chart.yaml"
 cat "$kube_helm_deploy_path_to_helm_files/Chart.yaml"
 
-echo kube_helm_deploy_set_chart
-envsubst < "$kube_helm_deploy_path_to_helm_files/$kube_helm_deploy_chart_tpl_name" > "$kube_helm_deploy_path_to_helm_files/Chart.yaml"
-cat "$kube_helm_deploy_path_to_helm_files/Chart.yaml"
-  
 echo kube_helm_deploy_set_values
 if [[ -f "$kube_helm_deploy_path_to_helm_files/$kube_helm_deploy_value_tpl_name" ]]; then
   envsubst < "$kube_helm_deploy_path_to_helm_files/$kube_helm_deploy_value_tpl_name" > "$kube_helm_deploy_path_to_helm_files/values.yaml"

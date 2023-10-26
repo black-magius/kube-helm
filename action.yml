@@ -1,5 +1,5 @@
 # action.yml
-name: 'Helm deploy'
+name: 'Kube Helm deploy'
 description: 'Kubernetes deploy by Helm'
 branding:
   icon: 'check-square'

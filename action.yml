@@ -15,7 +15,8 @@ inputs:
     default: ''
   release_name:
     description: 'Chart release name'
-    required: false
+    required: true
+    default: ''
   env_name:
     description: 'Enviroment name'
     required: true

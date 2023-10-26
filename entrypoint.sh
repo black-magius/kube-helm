@@ -4,7 +4,6 @@ set -e
 echo Auth process
 mkdir $HOME/.kube
 echo "$kube_helm_deploy_kube_auth_line" | base64 -d > $HOME/.kube/config
-cat $HOME/.kube/config
 
 echo kube_helm_deploy_get_app_version
 echo "$kube_helm_deploy_app_version"

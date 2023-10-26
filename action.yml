@@ -13,6 +13,15 @@ inputs:
     description: 'base64 dencoded kube config file'
     required: true
     default: ''
+  release_name:
+    description: 'Chart release name'
+    required: true
+    default: ${CI_PROJECT_NAME}
+  env_name:
+    description: 'Enviroment name'
+    required: true
+    default: ${ENV_NAME}
+
 outputs:
   time: # id of output
     description: 'The time we greeted you'
@@ -26,6 +35,8 @@ runs:
     kube_helm_deploy_value_tpl_name: "values.tpl.yaml"
     kube_helm_deploy_destination_namespace: ${{ inputs.namespace }}
     kube_helm_deploy_imagePullPolicy: ""
-    kube_helm_deploy_kube_auth_line: ${{ inputs.kube_auth_line }} 
+    kube_helm_deploy_kube_auth_line: ${{ inputs.kube_auth_line }}
+    kube_helm_deploy_value_file_name: "values-${{ inputs.env_name }}.yaml"
+    kube_helm_deploy_release_name: ${{ inputs.release_name }}
   args:
     - ${{ inputs.namespace }}

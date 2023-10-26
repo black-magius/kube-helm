@@ -16,11 +16,11 @@ inputs:
   release_name:
     description: 'Chart release name'
     required: true
-    default: ${CI_PROJECT_NAME}
+    default: ${{ env.CI_PROJECT_NAME }}
   env_name:
     description: 'Enviroment name'
     required: true
-    default: ${ENV_NAME}
+    default: ${{ env.ENV_NAME }}
 
 outputs:
   time: # id of output

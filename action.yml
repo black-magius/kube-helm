@@ -14,7 +14,7 @@ outputs:
     description: 'The time we greeted you'
 runs:
   using: 'docker'
-  image: 'docker:ghcr.io/black-magius/kube-helm:main'
+  image: 'docker://ghcr.io/black-magius/kube-helm:main'
   args:
     - ${{ inputs.namespace }}
     # - ${{ inputs.github-sarif }}

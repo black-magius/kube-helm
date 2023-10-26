@@ -15,12 +15,10 @@ inputs:
     default: ''
   release_name:
     description: 'Chart release name'
-    required: true
-    default: ${{ env.CI_PROJECT_NAME }}
+    required: false
   env_name:
     description: 'Enviroment name'
     required: true
-    default: ${{ env.ENV_NAME }}
 
 outputs:
   time: # id of output
@@ -36,7 +34,7 @@ runs:
     kube_helm_deploy_destination_namespace: ${{ inputs.namespace }}
     kube_helm_deploy_imagePullPolicy: ""
     kube_helm_deploy_kube_auth_line: ${{ inputs.kube_auth_line }}
-    kube_helm_deploy_value_file_name: "values-${{ inputs.env_name }}.yaml"
     kube_helm_deploy_release_name: ${{ inputs.release_name }}
+    kube_helm_deploy_value_file_name: "values-${{ inputs.env_name }}.yaml"
   args:
     - ${{ inputs.namespace }}

@@ -35,8 +35,8 @@ echo kube_helm_deploy_get_docker_config
 export DOCKER_CONFIG=$(echo -n "{\"auths\":{\"$CI_REGISTRY\":{\"auth\":\"$(echo -n "${CI_DEPLOY_USER}:${CI_DEPLOY_PASSWORD}" | base64 -w0)\"}}}" | base64 -w0)
 
 echo kube_helm_deploy_release_name
-if [[ "$kube_helm_deploy_value_file_name" == '' ]]; then
-  export kube_helm_deploy_release_name='rnd'
+if [[ "$kube_helm_deploy_release_name" == '' ]]; then
+  export kube_helm_deploy_release_name=${CI_PROJECT_NAME//_/-}
 fi
 echo $kube_helm_deploy_release_name
 

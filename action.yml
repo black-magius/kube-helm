@@ -1,0 +1,21 @@
+# action.yml
+name: 'KubeHelm'
+description: 'Kubernetes deploy by Helm'
+branding:
+  icon: 'check-square'
+  color: 'white'
+inputs:
+  namespace:  # namespace to deploy
+    description: 'namespace to deploy'
+    required: true
+    default: ''
+outputs:
+  time: # id of output
+    description: 'The time we greeted you'
+runs:
+  using: 'docker'
+  image: 'docker:ghcr.io/black-magius/kube-helm:main'
+  args:
+    - ${{ inputs.namespace }}
+    # - ${{ inputs.github-sarif }}
+    # - ${{ inputs.optional-flags }}

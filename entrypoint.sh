@@ -1,6 +1,10 @@
 #!/bin/bash -l
 
-ls -al
+ls -al 
+
+echo "Hello $1"
+time=$(date)
+echo "time=$1" >> $GITHUB_OUTPUT
 
 echo Auth process
 echo "${{ secrets.KUBE_XLOO_SA_MEDIA }}" | base64 -d > $HOME/.kube/config  

@@ -40,23 +40,18 @@ if [[ "$kube_helm_deploy_release_name" == '' ]]; then
 fi
 echo $kube_helm_deploy_release_name
 
-echo kube_helm_deploy_set_chart
-envsubst < "$kube_helm_deploy_path_to_helm_files/$kube_helm_deploy_chart_tpl_name" > "$kube_helm_deploy_path_to_helm_files/Chart.yaml"
-cat "$kube_helm_deploy_path_to_helm_files/Chart.yaml"
-
-echo kube_helm_deploy_set_values
-if [[ -f "$kube_helm_deploy_path_to_helm_files/$kube_helm_deploy_value_tpl_name" ]]; then
-  envsubst < "$kube_helm_deploy_path_to_helm_files/$kube_helm_deploy_value_tpl_name" > "$kube_helm_deploy_path_to_helm_files/values.yaml"
-else
-  envsubst < "$kube_helm_deploy_path_to_helm_files/$kube_helm_deploy_value_tpl_name" > "$kube_helm_deploy_path_to_helm_files/values_tmp.yaml"
-  mv -f "$kube_helm_deploy_path_to_helm_files/values_tmp.yaml" "$kube_helm_deploy_path_to_helm_files/values.yaml"
+echo kube_helm_deploy_prepare
+if [[ $kube_helm_deploy_prepare == 'true' ]]; then
+  for yaml in $(ls $kube_helm_deploy_path_to_helm_files/*.yaml); do echo $yaml; done
+  envsubst < "$yaml" > "$yaml-${GITHUB_SHA}"
+  mv -f "$yaml-${GITHUB_SHA}" "$yaml"
+  echo "$yaml"
+  cat "$yaml"
 fi
-cat "$kube_helm_deploy_path_to_helm_files/values.yaml"
-  
+
 echo kube_helm_deploy_set_values_additional
 if [[ -f "$kube_helm_deploy_path_to_helm_files/$kube_helm_deploy_value_file_name" ]]; then
-  envsubst < "$kube_helm_deploy_path_to_helm_files/$kube_helm_deploy_value_file_name" | \
-  helm template "$kube_helm_deploy_path_to_helm_files"  -n "$kube_helm_deploy_destination_namespace" --debug --values - > debug.yaml; true
+  helm template "$kube_helm_deploy_path_to_helm_files"  -n "$kube_helm_deploy_destination_namespace" --debug --values $kube_helm_deploy_path_to_helm_files/$kube_helm_deploy_value_file_name > debug.yaml; true
 else
   echo value file not found file kube_helm_deploy_value_file_name=$kube_helm_deploy_value_file_name 
   helm template "$kube_helm_deploy_path_to_helm_files"  -n "$kube_helm_deploy_destination_namespace" --debug > debug.yaml; true
@@ -65,9 +60,8 @@ cat ./debug.yaml
   
 echo kube_helm_deploy_run
 if [[ -f "$kube_helm_deploy_path_to_helm_files/$kube_helm_deploy_value_file_name" ]]; then
-  envsubst < "$kube_helm_deploy_path_to_helm_files/$kube_helm_deploy_value_file_name" | \
   helm upgrade "$kube_helm_deploy_release_name" "$kube_helm_deploy_path_to_helm_files" \
-  --install --create-namespace -n "$kube_helm_deploy_destination_namespace" --values -
+  --install --create-namespace -n "$kube_helm_deploy_destination_namespace" --values $kube_helm_deploy_path_to_helm_files/$kube_helm_deploy_value_file_name
 else
   helm upgrade "$kube_helm_deploy_release_name" "$kube_helm_deploy_path_to_helm_files" \
   --install --create-namespace -n "$kube_helm_deploy_destination_namespace"

@@ -20,6 +20,10 @@ inputs:
   env_name:
     description: 'Enviroment name'
     required: true
+  prepare:
+    description: 'Should be set to true if envsubst needed to apply to *.yaml'
+    required: true
+    default: 'false'
 
 outputs:
   time: # id of output
@@ -30,12 +34,11 @@ runs:
   env:
     kube_helm_deploy_app_version: ""
     kube_helm_deploy_path_to_helm_files: "./.deploy/.chart"
-    kube_helm_deploy_chart_tpl_name: "Chart.tpl.yaml"
-    kube_helm_deploy_value_tpl_name: "values.tpl.yaml"
     kube_helm_deploy_destination_namespace: ${{ inputs.namespace }}
     kube_helm_deploy_imagePullPolicy: ""
     kube_helm_deploy_kube_auth_line: ${{ inputs.kube_auth_line }}
     kube_helm_deploy_release_name: ${{ inputs.release_name }}
     kube_helm_deploy_value_file_name: "values-${{ inputs.env_name }}.yaml"
+    kube_helm_deploy_prepare: ${{ inputs.prepare }}
   args:
     - ${{ inputs.namespace }}

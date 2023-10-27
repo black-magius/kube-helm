@@ -42,11 +42,12 @@ echo $kube_helm_deploy_release_name
 
 echo kube_helm_deploy_prepare
 if [[ $kube_helm_deploy_prepare == 'true' ]]; then
-  for yaml in $(ls $kube_helm_deploy_path_to_helm_files/*.yaml); do echo $yaml; done
-  envsubst < "$yaml" > "$yaml-${GITHUB_SHA}"
-  mv -f "$yaml-${GITHUB_SHA}" "$yaml"
-  echo "$yaml"
-  cat "$yaml"
+  for yaml in $(ls $kube_helm_deploy_path_to_helm_files/*.yaml); do
+    envsubst < "$yaml" > "$yaml-${GITHUB_SHA}"
+    mv -f "$yaml-${GITHUB_SHA}" "$yaml"
+    echo "$yaml"
+    cat "$yaml"
+  done
 fi
 
 echo kube_helm_deploy_set_values_additional
